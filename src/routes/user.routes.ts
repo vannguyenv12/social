@@ -1,11 +1,9 @@
 import { Router } from 'express'
-import { authController } from '~/features/user/controllers/auth.controllers'
+import { userCOntroller } from '~/features/user/controllers/user.controllers'
 import { authMiddleware } from '~/globals/auth-middleware'
 
-const router = Router()
+const userRoutes = Router()
 
-router.post('/auth/register', authController.register)
-router.post('/auth/login', authController.login)
-router.post('/auth/me', authMiddleware.verifyUser, authController.getMe)
+userRoutes.get('/', authMiddleware.verifyUser, userCOntroller.getAllUsers)
 
-export default router
+export default userRoutes

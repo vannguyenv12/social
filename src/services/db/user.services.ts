@@ -15,7 +15,8 @@ class UserService {
     const user = await prisma.user.create({
       data: {
         ...requestBody,
-        password: hashedPassword
+        password: hashedPassword,
+        role: 'USER'
       }
     })
 
@@ -62,6 +63,10 @@ class UserService {
     }
 
     return jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '3d' })
+  }
+
+  public async findUsers() {
+    return await prisma.user.findMany()
   }
 }
 

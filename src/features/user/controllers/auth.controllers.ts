@@ -16,7 +16,7 @@ class AuthController {
     const { user, token } = await userService.createUser(req.body)
 
     return res.json({
-      message: 'Register Successfully!',
+      message: 'success',
       user,
       access_token: token
     })
@@ -27,7 +27,7 @@ class AuthController {
     const { user, token } = await userService.loginUser(email, password)
 
     return res.json({
-      message: 'Login Successfully!',
+      message: 'success',
       user,
       access_token: token
     })

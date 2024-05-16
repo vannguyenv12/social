@@ -5,15 +5,11 @@ import { AuthPayload } from '~/features/user/types/user.types'
 
 class AuthMiddleware {
   public verifyUser(req: Request, _res: Response, next: NextFunction) {
-    console.log('header', req.headers['authorization'])
-
     if (!req.headers['authorization'] || !req.headers['authorization']?.startsWith('Bearer ')) {
       throw new NotAuthorizedError('Token is not available. Please login again')
     }
 
     const token = req.headers['authorization'].split(' ')[1]
-
-    console.log('>>> check token', token)
 
     try {
       const payload: AuthPayload = jwt.verify(token, process.env.JWT_SECRET!) as AuthPayload

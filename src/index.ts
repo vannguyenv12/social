@@ -1,15 +1,24 @@
 import express, { NextFunction, Request, Response } from 'express'
 import HTTP_STATUS from 'http-status-codes'
 import 'express-async-errors'
-import router from './routes/user.routes'
+import authRoute from './routes/auth.routes'
 import { CustomError, IErrorResponse } from './globals/error-handler'
+import userRoutes from './routes/user.routes'
+import cors from 'cors'
 
 const app = express()
 const port = 5000
+
+app.use(
+  cors({
+    origin: '*'
+  })
+)
 app.use(express.json())
 
 // Routes
-app.use('/api/v1', router)
+app.use('/api/v1', authRoute)
+app.use('/api/v1/users', userRoutes)
 
 // Error handler
 app.all('*', (req: Request, res: Response) => {
