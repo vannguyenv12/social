@@ -2,7 +2,7 @@ import express, { Application } from 'express'
 import 'express-async-errors'
 import { Server } from './setupServer'
 
-class BaseServer {
+class SoundCloudApp {
   public initialize(): void {
     const app: Application = express()
     const server: Server = new Server(app)
@@ -11,5 +11,5 @@ class BaseServer {
   }
 }
 
-const baseServer: BaseServer = new BaseServer()
-baseServer.initialize()
+const soundCloudApp: SoundCloudApp = new SoundCloudApp()
+soundCloudApp.initialize()
