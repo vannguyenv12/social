@@ -20,5 +20,19 @@ model User {
   password String
   address String
   role String
-  
+  type String @default("SYSTEM")
+  tracks Track[]
+}
+
+model Track {
+  id    Int     @id @default(autoincrement())
+  title String  @unique
+  description  String
+  category String
+  imgUrl String
+  trackUrl String
+  countLike Int
+  countPlay Int
+  user   User   @relation(fields: [uploaderId], references: [id])
+  uploaderId Int
 }

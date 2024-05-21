@@ -1,7 +1,7 @@
 import { User } from '@prisma/client'
 import prisma from '~/prisma.client'
 import bcrypt from 'bcrypt'
-import { BadRequestError, NotAuthorizedError } from '~/globals/error-handler'
+import { BadRequestError, NotAuthorizedError, NotFoundError } from '~/globals/error-handler'
 import jwt from 'jsonwebtoken'
 
 class UserService {
@@ -67,6 +67,34 @@ class UserService {
 
   public async findUsers() {
     return await prisma.user.findMany()
+  }
+
+  public async getSocialMedia(type: string, email: string) {
+    const user = await prisma.user.findFirst({
+      where: {
+        type,
+        email
+      }
+    })
+
+    if (!user) {
+      throw new NotFoundError(`User with email ${email} does not exist`)
+    }
+
+    const payload = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      address: user.address
+    }
+
+    const accessToken = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '3d' })
+
+    return {
+      user,
+      accessToken
+    }
   }
 }
 

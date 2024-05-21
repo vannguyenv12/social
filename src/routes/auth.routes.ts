@@ -9,5 +9,6 @@ const authRoute = Router()
 authRoute.post('/auth/register', validate(userSchemaRegister), authController.register)
 authRoute.post('/auth/login', authController.login)
 authRoute.post('/auth/me', authMiddleware.verifyUser, authController.getMe)
+authRoute.post('/auth/social-media', authController.getSocialMedia)
 
 export default authRoute

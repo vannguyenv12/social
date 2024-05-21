@@ -17,8 +17,10 @@ class AuthController {
 
     return res.json({
       message: 'success',
-      user,
-      access_token: token
+      data: {
+        user,
+        access_token: token
+      }
     })
   }
 
@@ -28,8 +30,10 @@ class AuthController {
 
     return res.json({
       message: 'success',
-      user,
-      access_token: token
+      data: {
+        user,
+        access_token: token
+      }
     })
   }
 
@@ -37,6 +41,20 @@ class AuthController {
     return res.json({
       message: 'Login Successfully!',
       user: req.currentUser
+    })
+  }
+
+  public async getSocialMedia(req: Request, res: Response) {
+    const { type, username } = req.body
+
+    const { user, accessToken } = await userService.getSocialMedia(type, username)
+
+    return res.json({
+      message: 'Login Successfully!',
+      data: {
+        user,
+        access_token: accessToken
+      }
     })
   }
 }
