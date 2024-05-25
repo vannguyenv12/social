@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express'
 import { Application } from 'express'
 import HTTP_STATUS from 'http-status-codes'
-
+import path from 'path'
 import cors from 'cors'
 import { CustomError, IErrorResponse } from './globals/error-handler'
 import applicationRoutes from './routes/app.routes'
@@ -15,6 +15,7 @@ export class Server {
 
   public start(): void {
     this.setupStandardMiddleware()
+    this.setupStaticFile()
     this.setupRoutes()
     this.globalErrorHandler()
     this.startHttpServer()
@@ -27,6 +28,12 @@ export class Server {
       })
     )
     this.app.use(express.json())
+  }
+
+  private setupStaticFile(): void {
+    const uploadsPath = path.resolve(__dirname, '../uploads')
+
+    this.app.use('/uploads', express.static(uploadsPath))
   }
 
   private globalErrorHandler(): void {

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `track` MODIFY `countLike` INTEGER NOT NULL DEFAULT 0,
+    MODIFY `countPlay` INTEGER NOT NULL DEFAULT 0;

@@ -31,8 +31,8 @@ model Track {
   category String
   imgUrl String
   trackUrl String
-  countLike Int
-  countPlay Int
+  countLike Int @default(0)
+  countPlay Int @default(0)
   user   User   @relation(fields: [uploaderId], references: [id])
   uploaderId Int
 }
